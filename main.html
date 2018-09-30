@@ -21,6 +21,10 @@ var increase = {
 	building:1.15,
 	}
 	
+	
+	//SERFS
+	//LUMBER JACK - TAX COLLECTOR - FARMER - MINER
+	
 //RESOURCES
 //Declares wood resource variables	
 var wood = {
@@ -180,14 +184,6 @@ function earningSecUpdate() {
 	document.getElementById("ironEarningSec").innerHTML = Number(Math.round(iron.earningSec+'e2')+'e-2');
 	}
 
-//Method to reset the values of per second gather totals
-function secondTotalReset() {
-	wood.secondTotal = 0;
-	food.secondTotal = 0;
-	gold.secondTotal = 0;
-	iron.secondTotal = 0;
-	}
-
 //Method to determine the value of resource earnings per second
 function earningSecValues() {
 	wood.earningSec = wood.idleRate + wood.secondTotal;
@@ -208,24 +204,36 @@ function mainLoop() {
 function gatherWood() {
 	wood.total += wood.clickerRate;
 	wood.secondTotal += wood.clickerRate;
+	setTimeout(function(){
+         wood.secondTotal -= wood.clickerRate; //research moving average to smooth even further
+			},1000);
 	}
 
 //On click action for Gather Food
 function gatherFood() {
 	food.total += food.clickerRate;
 	food.secondTotal += food.clickerRate;
+		setTimeout(function(){
+         food.secondTotal -= food.clickerRate;
+			},1000);
 	}
 
 //On click action for Gather Gold
 function gatherGold() {
 	gold.total += gold.clickerRate;
 	gold.secondTotal += gold.clickerRate;
+		setTimeout(function(){
+         gold.secondTotal -= gold.clickerRate;
+			},1000);
 	}
 
 //On click action for Gather Iron
 function gatherIron() {
 	iron.total += iron.clickerRate;
 	iron.secondTotal += iron.clickerRate;
+		setTimeout(function(){
+         iron.secondTotal -= iron.clickerRate;
+			},1000);
 	}
 
 //Function for axe upgrades
@@ -392,9 +400,6 @@ function buildingTreasury() {
 requestAnimationFrame(mainLoop);
 //runs idle rates function every 1 second
 setInterval(idleUpdate, 1000);
-//Resets the per sec gather earnings every 1 second
-setInterval(secondTotalReset, 1000);
-
 </script>
 <br>
 <h2>Clickers</h2>
