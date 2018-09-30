@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Idle Clicker Prototype</title>
+</head>
+<body>
+<h1>Idle Clicker Prototype</h1>
+<h2>Resources</h2>
+<p>Wood: <span id="wood"></p>
+<p>Gold: <span id="gold"></p>
+<p>Food: <span id="food"></p>
+<p>Iron: <span id="iron"></p>
+<script>
+//FILLER VARIABLES
+var something = null;
+//RESOURCES
+//Declares wood resource variables
+var increase = {
+	upgrade:2,
+	building:1.1,
+	}
+	
+var wood = {
+    clickerRate:1,
+	idleRate:0,
+	total:0,
+}
+
+//Declares food resource variables
+var food = {
+    clickerRate:1,
+	idleRate:0, 
+	total:0,
+}
+
+//Declares gold resource variables
+var gold = {
+    clickerRate:1,
+	idleRate:0, 
+	total:0,
+}
+
+//Declares iron resource variables
+var iron = {
+    clickerRate:1,
+	idleRate:0,
+	total:0,	
+}
+
+//UPGRADES
+var axeCost = {
+	clickerBoost:1,
+	wood:15,
+	food:5,
+	gold:5,
+	iron:5,
+	upgradeCount:0,
+}
+
+var raiseCost = {
+	clickerBoost:1,
+	wood:5,
+	food:5,
+	gold:15,
+	iron:5,
+	upgradeCount:0,
+}
+
+var hoeCost = {
+	clickerBoost:1,
+	wood:5,
+	food:15,
+	gold:5,
+	iron:5,
+	upgradeCount:0,
+}
+
+var pickCost = {
+	clickerBoost:1,
+	wood:5,
+	food:5,
+	gold:5,
+	iron:15,
+	upgradeCount:0,
+}
+
+//BUILDINGS
+var lumbercampCost = {
+	idleBoost:1,
+	wood:5,
+	food:5,
+	gold:5,
+	iron:5,
+	upgradeCount:0,
+}
+
+
+//Method of displaying totals to screen
+function totalUpdate(){
+	document.getElementById("wood").innerHTML = wood.total;
+	document.getElementById("gold").innerHTML = gold.total;
+	document.getElementById("food").innerHTML = food.total;
+	document.getElementById("iron").innerHTML = iron.total;
+ }
+ 
+ //function upgradeCost(){
+ function upgradeCost(something) {
+ something.wood *= increase.upgrade;
+ something.food *= increase.upgrade;
+ something.gold *= increase.upgrade;
+ something.iron *= increase.upgrade;
+}
+
+
+ //function upgradeCost(){
+ function buildingCost(something) {
+ something.wood *= increase.building;
+ something.food *= increase.building;
+ something.gold *= increase.building;
+ something.iron *= increase.building;
+}
+ 
+ function idleUpdate() {
+	wood.total += wood.idleRate;
+	food.total += food.idleRate;
+	gold.total += gold.idleRate;
+	iron.total += iron.idleRate;
+ }
+ 
+ //Games loop - currently tied to FPS
+function mainLoop() {
+    totalUpdate();
+    requestAnimationFrame(mainLoop);
+}
+
+//On click action for Gather Wood
+function gatherWood() {
+wood.total += wood.clickerRate;
+}
+
+//On click action for Gather Food
+function gatherFood() {
+food.total += food.clickerRate;
+}
+
+//On click action for Gather Gold
+function gatherGold() {
+gold.total += gold.clickerRate;
+}
+
+//On click action for Gather Iron
+function gatherIron() {
+iron.total += iron.clickerRate;
+}
+
+function upgradeAxe() {
+	if(wood.total >= axeCost.wood && food.total >= axeCost.food && gold.total >= axeCost.gold && iron.total >= axeCost.iron) {
+	wood.clickerRate += axeCost.clickerBoost;
+	wood.total -= axeCost.wood;
+	iron.total -= axeCost.iron;
+	gold.total -= axeCost.gold;
+	food.total -= axeCost.food;
+	something = axeCost;
+	upgradeCost(something);
+	}
+	else {
+	//insert error message to remove itself after 5 seconds
+	document.getElementById("check").innerHTML="You can not afford this yet.";
+	 setTimeout(function(){
+         document.getElementById("check").innerHTML="";
+         },3000);
+	}
+}
+
+function upgradeRates() {
+	if(wood.total >= raiseCost.wood && food.total >= raiseCost.food && gold.total >= raiseCost.gold && iron.total >= raiseCost.iron) {
+	gold.clickerRate += raiseCost.clickerBoost;
+	wood.total -= raiseCost.wood;
+	iron.total -= raiseCost.iron;
+	gold.total -= raiseCost.gold;
+	food.total -= raiseCost.food;
+	something = raiseCost;
+	upgradeCost(something);
+	}
+	else {
+	//insert error message to remove itself after 5 seconds
+	document.getElementById("check").innerHTML="You can not afford this yet.";
+	 setTimeout(function(){
+         document.getElementById("check").innerHTML="";
+         },3000);
+	}
+}
+
+function upgradeHoe() {
+	if(wood.total >= hoeCost.wood && food.total >= hoeCost.food && gold.total >= hoeCost.gold && iron.total >= hoeCost.iron) {
+	food.clickerRate += hoeCost.clickerBoost;
+	wood.total -= hoeCost.wood;
+	iron.total -= hoeCost.iron;
+	gold.total -= hoeCost.gold;
+	food.total -= hoeCost.food;
+	something = hoeCost;
+	upgradeCost(something);
+	}
+	else {
+	//insert error message to remove itself after 5 seconds
+	document.getElementById("check").innerHTML="You can not afford this yet.";
+	 setTimeout(function(){
+         document.getElementById("check").innerHTML="";
+         },3000);
+	}
+}
+
+function upgradePick() {
+	if(wood.total >= pickCost.wood && food.total >= pickCost.food && gold.total >= pickCost.gold && iron.total >= pickCost.iron) {
+	wood.clickerRate += pickCost.clickerBoost;
+	wood.total -= pickCost.wood;
+	iron.total -= pickCost.iron;
+	gold.total -= pickCost.gold;
+	food.total -= pickCost.food;
+	something = pickCost;
+	upgradeCost(something);
+	}
+	else {
+	//insert error message to remove itself after 5 seconds
+	document.getElementById("check").innerHTML="You can not afford this yet.";
+	 setTimeout(function(){
+         document.getElementById("check").innerHTML="";
+         },3000);
+	}
+}
+
+function buildingLumbercamp() {
+	if(wood.total >= lumbercampCost.wood && food.total >= lumbercampCost.food && gold.total >= lumbercampCost.gold && iron.total >= lumbercampCost.iron) {
+	wood.idleRate += lumbercampCost.idleBoost;
+	wood.total -= lumbercampCost.wood;
+	iron.total -= lumbercampCost.iron;
+	gold.total -= lumbercampCost.gold;
+	food.total -= lumbercampCost.food;
+	something = lumbercampCost;
+	buildingCost(something);
+	}
+	else {
+	//insert error message to remove itself after 5 seconds
+	document.getElementById("check").innerHTML="You can not afford this yet.";
+	 setTimeout(function(){
+         document.getElementById("check").innerHTML="";
+         },3000);
+	}
+}
+
+
+//starts off game state
+requestAnimationFrame(mainLoop);
+//runs idle rates every 1 second
+setInterval(idleUpdate, 1000);
+</script>
+<br>
+<h2>Clickers</h2>
+<button onclick="gatherWood()">Gather Wood</button>
+<button onclick="gatherGold()">Collect Gold</button>
+<button onclick="gatherFood()">Forage Food</button>
+<button onclick="gatherIron()">Mine Iron</button>
+<br><br>
+<h2>Upgrades</h2>
+<button onclick="upgradeAxe()">Upgrade Axe</button>
+<button onclick="upgradeRates()">Increase Tax Rate</button>
+<button onclick="upgradeHoe()">Upgrade Hoe</button>
+<button onclick="upgradePick()">Upgrade Pick</button>
+<br><br>
+<h2>Buildings</h2>
+<button onclick="buildingLumbercamp()">Build Lumber Camp</button>
+<h3>Log:</h3>
+<p id="check"></p>
+</body>
+</html>
