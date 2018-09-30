@@ -1,5 +1,10 @@
 # Game-Prototype
 
+Update 0.3
+Incorporated earning per second counter - requires further development to smooth reset transitions
+Cleaned up code indenting
+Updated code comments
+
 Update 0.2
 Incorporated the idle income mechanic.
 Resolution to JS rounding issue found.
