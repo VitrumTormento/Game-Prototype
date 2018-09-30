@@ -1,5 +1,8 @@
 # Game-Prototype
 
+Update 0.4
+New method for calculating earning per second counter - removes the requirement to reset value to zero
+
 Update 0.3
 Incorporated earning per second counter - requires further development to smooth reset transitions
 Cleaned up code indenting
