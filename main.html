@@ -4,13 +4,17 @@
 	<title>Idle Clicker Prototype</title>
 	<link rel="stylesheet" href="gamePrototype.css">
 </head>
-<body>
+<body onload="startLevels()">
+<div class="split left"><div class="centered">
 <h1>Idle Clicker Prototype</h1>
 <h2>Resources</h2>
 <p>Wood: <span id="wood"></span>  (<span id="woodEarningSec"></span>/sec)</p>
 <p>Gold: <span id="gold"></span>  (<span id="goldEarningSec"></span>/sec)</p>
 <p>Food: <span id="food"></span>  (<span id="foodEarningSec"></span>/sec)</p>
 <p>Iron: <span id="iron"></span>  (<span id="ironEarningSec"></span>/sec)</p>
+<h3>Log:</h3>
+<p id="check"></p>
+</div></div>
 <script>
 //Filler Variables
 var something = null;
@@ -18,14 +22,14 @@ var something = null;
 //GAME SETTINGS
 //Defines cost increase rate
 var increase = {
-	upgrade:2,
-	building:1.15,
+	upgrade:1.15,
+	building:1.25,
+	serf:1.2
 	}
 	
 	
 	//SERFS
-	//LUMBER JACK - TAX COLLECTOR - FARMER - MINER
-	
+	//LUMBER JACK - TAX COLLECTOR - FA
 //RESOURCES
 //Declares wood resource variables	
 var wood = {
@@ -71,7 +75,7 @@ var axeCost = {
 	food:5,
 	gold:5,
 	iron:5,
-	upgradeCount:0,
+	upgradeCount:1,
 	}
 
 //Declares rate cost variables
@@ -81,7 +85,7 @@ var raiseCost = {
 	food:5,
 	gold:15,
 	iron:5,
-	upgradeCount:0,
+	upgradeCount:1,
 	}
 
 //Declares hoe cost variables
@@ -91,7 +95,7 @@ var hoeCost = {
 	food:15,
 	gold:5,
 	iron:5,
-	upgradeCount:0,
+	upgradeCount:1,
 	}
 
 //Declares pick cost variables
@@ -101,7 +105,7 @@ var pickCost = {
 	food:5,
 	gold:5,
 	iron:15,
-	upgradeCount:0,
+	upgradeCount:1,
 	}
 
 //BUILDINGS
@@ -145,6 +149,47 @@ var mineCost = {
 	upgradeCount:0,
 	}
 
+//SERFS
+//Declares lumber jack cost variables
+var lumberjackCost = {
+	idleBoost:wood.clickerRate,
+	wood:20,
+	food:20,
+	gold:20,
+	iron:20,
+	upgradeCount:0,
+	}
+
+//Declares tax collector cost variables
+var taxcollectorCost = {
+	idleBoost:gold.clickerRate,
+	wood:20,
+	food:20,
+	gold:20,
+	iron:20,
+	upgradeCount:0,
+	}
+
+//Declares farmer cost variables
+var farmerCost = {
+	idleBoost:food.clickerRate,
+	wood:20,
+	food:20,
+	gold:20,
+	iron:20,
+	upgradeCount:0,
+	}
+
+//Declares miner cost variables
+var minerCost = {
+	idleBoost:iron.clickerRate,
+	wood:20,
+	food:20,
+	gold:20,
+	iron:20,
+	upgradeCount:0,
+	}
+
 //Method of displaying totals to screen
 function totalUpdate(){
 	document.getElementById("wood").innerHTML = Number(Math.round(wood.total+'e2')+'e-2');
@@ -152,21 +197,56 @@ function totalUpdate(){
 	document.getElementById("food").innerHTML = Number(Math.round(food.total+'e2')+'e-2');
 	document.getElementById("iron").innerHTML = Number(Math.round(iron.total+'e2')+'e-2');
 	}
+
+//run onload - populates level fields	
+function startLevels() {
+	document.getElementById("axeCount").innerHTML="1";
+	document.getElementById("hoeCount").innerHTML="1";
+	document.getElementById("raiseCount").innerHTML="1";
+	document.getElementById("pickCount").innerHTML="1";
+	document.getElementById("lumbercampCount").innerHTML="0";
+	document.getElementById("millCount").innerHTML="0";
+	document.getElementById("treasuryCount").innerHTML="0";
+	document.getElementById("mineCount").innerHTML="0";
+	document.getElementById("lumberjackCount").innerHTML="0";
+	document.getElementById("taxcollectorCount").innerHTML="0";
+	document.getElementById("farmerCount").innerHTML="0";
+	document.getElementById("minerCount").innerHTML="0";
+	}
  
 //Method to determine cost increase to upgrades
 function upgradeCost(something) {
 	something.wood *= increase.upgrade;
+	something.wood = Number(Math.round(something.wood+'e2')+'e-2')
 	something.food *= increase.upgrade;
+	something.food = Number(Math.round(something.food+'e2')+'e-2')
 	something.gold *= increase.upgrade;
+	something.gold = Number(Math.round(something.gold+'e2')+'e-2')
 	something.iron *= increase.upgrade;
+	something.iron = Number(Math.round(something.iron+'e2')+'e-2')
 	}
 
 //Method to determine cost increase to buildings
 function buildingCost(something) {
 	something.wood *= increase.building;
+	something.wood = Number(Math.round(something.wood+'e2')+'e-2')
 	something.food *= increase.building;
+	something.food = Number(Math.round(something.food+'e2')+'e-2')
 	something.gold *= increase.building;
+	something.gold = Number(Math.round(something.gold+'e2')+'e-2')
 	something.iron *= increase.building;
+	something.iron = Number(Math.round(something.iron+'e2')+'e-2')
+	}
+	
+function serfCost(something) {
+	something.wood *= increase.serf;
+	something.wood = Number(Math.round(something.wood+'e2')+'e-2')
+	something.food *= increase.serf;
+	something.food = Number(Math.round(something.food+'e2')+'e-2')
+	something.gold *= increase.serf;
+	something.gold = Number(Math.round(something.gold+'e2')+'e-2')
+	something.iron *= increase.serf;
+	something.iron = Number(Math.round(something.iron+'e2')+'e-2')
 	}
  
 //Method to add the value of idle incomes to respective resource totals
@@ -245,6 +325,8 @@ function upgradeAxe() {
 	iron.total -= axeCost.iron;
 	gold.total -= axeCost.gold;
 	food.total -= axeCost.food;
+	axeCost.upgradeCount += 1;
+	document.getElementById("axeCount").innerHTML=axeCost.upgradeCount;
 	something = axeCost;
 	upgradeCost(something);
 		}
@@ -265,6 +347,8 @@ function upgradeRates() {
 	iron.total -= raiseCost.iron;
 	gold.total -= raiseCost.gold;
 	food.total -= raiseCost.food;
+	raiseCost.upgradeCount += 1;
+	document.getElementById("raiseCount").innerHTML=raiseCost.upgradeCount;
 	something = raiseCost;
 	upgradeCost(something);
 		}
@@ -285,6 +369,8 @@ function upgradeHoe() {
 	iron.total -= hoeCost.iron;
 	gold.total -= hoeCost.gold;
 	food.total -= hoeCost.food;
+	hoeCost.upgradeCount += 1;
+	document.getElementById("hoeCount").innerHTML=hoeCost.upgradeCount;
 	something = hoeCost;
 	upgradeCost(something);
 		}
@@ -305,6 +391,8 @@ function upgradePick() {
 	iron.total -= pickCost.iron;
 	gold.total -= pickCost.gold;
 	food.total -= pickCost.food;
+	pickCost.upgradeCount += 1;
+	document.getElementById("pickCount").innerHTML=pickCost.upgradeCount;
 	something = pickCost;
 	upgradeCost(something);
 		}
@@ -325,6 +413,8 @@ function buildingLumbercamp() {
 	iron.total -= lumbercampCost.iron;
 	gold.total -= lumbercampCost.gold;
 	food.total -= lumbercampCost.food;
+	lumbercampCost.upgradeCount += 1;
+	document.getElementById("lumbercampCount").innerHTML=lumbercampCost.upgradeCount;
 	something = lumbercampCost;
 	buildingCost(something);
 		}
@@ -345,6 +435,8 @@ function buildingMill() {
 	iron.total -= millCost.iron;
 	gold.total -= millCost.gold;
 	food.total -= millCost.food;
+	millCost.upgradeCount += 1;
+	document.getElementById("millCount").innerHTML=millCost.upgradeCount;
 	something = millCost;
 	buildingCost(something);
 		}
@@ -365,6 +457,8 @@ function buildingMine() {
 	iron.total -= mineCost.iron;
 	gold.total -= mineCost.gold;
 	food.total -= mineCost.food;
+	mineCost.upgradeCount += 1;
+	document.getElementById("mineCount").innerHTML=mineCost.upgradeCount;
 	something = mineCost;
 	buildingCost(something);
 		}
@@ -385,12 +479,138 @@ function buildingTreasury() {
 	iron.total -= treasuryCost.iron;
 	gold.total -= treasuryCost.gold;
 	food.total -= treasuryCost.food;
+	treasuryCost.upgradeCount += 1;
+	document.getElementById("treasuryCount").innerHTML=treasuryCost.upgradeCount;
 	something = treasuryCost;
 	buildingCost(something);
 		}
 	else {
 	//insert error message to remove itself after 5 seconds
 	document.getElementById("check").innerHTML="<span id='test'>You can not afford this yet.</span><br>Wood: "+treasuryCost.wood+"<br>Food: "+treasuryCost.food+"<br>Gold: "+treasuryCost.gold+"<br>Iron: "+treasuryCost.iron;
+	 setTimeout(function(){
+         document.getElementById("check").innerHTML="";
+			},5000);
+		}
+	}
+	
+//Function for lumber jack
+function hireLumberjack() {
+	if(lumbercampCost.upgradeCount >= 1) {
+	if(wood.total >= lumberjackCost.wood && food.total >= lumberjackCost.food && gold.total >= lumberjackCost.gold && iron.total >= lumberjackCost.iron) {
+	wood.idleRate += lumberjackCost.idleBoost;
+	wood.total -= lumberjackCost.wood;
+	iron.total -= lumberjackCost.iron;
+	gold.total -= lumberjackCost.gold;
+	food.total -= lumberjackCost.food;
+	lumberjackCost.upgradeCount += 1;
+	document.getElementById("lumberjackCount").innerHTML=lumberjackCost.upgradeCount;
+	something = lumberjackCost;
+	serfCost(something);
+	}
+	else {
+	//insert error message to remove itself after 5 seconds
+	document.getElementById("check").innerHTML="<span id='test'>You can not afford this yet.</span><br>Wood: "+lumberjackCost.wood+"<br>Food: "+lumberjackCost.food+"<br>Gold: "+lumberjackCost.gold+"<br>Iron: "+lumberjackCost.iron;
+	 setTimeout(function(){
+         document.getElementById("check").innerHTML="";
+			},5000);
+		}
+	}
+	else {
+	//insert error message to remove itself after 5 seconds
+	document.getElementById("check").innerHTML="<span id='test'>You require a Lumber Camp first.</span>";
+	 setTimeout(function(){
+         document.getElementById("check").innerHTML="";
+			},5000);
+		}
+	}
+
+//Function for tax collector
+function hireTaxCollector() {
+	if(treasuryCost.upgradeCount >= 1) {
+	if(wood.total >= taxcollectorCost.wood && food.total >= taxcollectorCost.food && gold.total >= taxcollectorCost.gold && iron.total >= taxcollectorCost.iron) {
+	gold.idleRate += taxcollectorCost.idleBoost;
+	wood.total -= taxcollectorCost.wood;
+	iron.total -= taxcollectorCost.iron;
+	gold.total -= taxcollectorCost.gold;
+	food.total -= taxcollectorCost.food;
+	taxcollectorCost.upgradeCount += 1;
+	document.getElementById("taxcollectorCount").innerHTML=taxcollectorCost.upgradeCount;
+	something = taxcollectorCost;
+	serfCost(something);
+		}
+	else {
+	//insert error message to remove itself after 5 seconds
+	document.getElementById("check").innerHTML="<span id='test'>You can not afford this yet.</span><br>Wood: "+taxcollectorCost.wood+"<br>Food: "+taxcollectorCost.food+"<br>Gold: "+taxcollectorCost.gold+"<br>Iron: "+taxcollectorCost.iron;
+	 setTimeout(function(){
+         document.getElementById("check").innerHTML="";
+			},5000);
+		}
+	}
+	else {
+	//insert error message to remove itself after 5 seconds
+	document.getElementById("check").innerHTML="<span id='test'>You require a Treasury first.</span>";
+	 setTimeout(function(){
+         document.getElementById("check").innerHTML="";
+			},5000);
+		}
+	}
+	
+//Function for farmer
+function hireFarmer() {
+	if(millCost.upgradeCount >= 1) {
+	if(wood.total >= farmerCost.wood && food.total >= farmerCost.food && gold.total >= farmerCost.gold && iron.total >= farmerCost.iron) {
+	food.idleRate += farmerCost.idleBoost;
+	wood.total -= farmerCost.wood;
+	iron.total -= farmerCost.iron;
+	gold.total -= farmerCost.gold;
+	food.total -= farmerCost.food;
+	farmerCost.upgradeCount += 1;
+	document.getElementById("farmerCount").innerHTML=farmerCost.upgradeCount;
+	something = farmerCost;
+	serfCost(something);
+		}
+	else {
+	//insert error message to remove itself after 5 seconds
+	document.getElementById("check").innerHTML="<span id='test'>You can not afford this yet.</span><br>Wood: "+farmerCost.wood+"<br>Food: "+farmerCost.food+"<br>Gold: "+farmerCost.gold+"<br>Iron: "+farmerCost.iron;
+	 setTimeout(function(){
+         document.getElementById("check").innerHTML="";
+			},5000);
+		}
+	} 
+	else {
+	//insert error message to remove itself after 5 seconds
+	document.getElementById("check").innerHTML="<span id='test'>You require a Mill first.</span>";
+	 setTimeout(function(){
+         document.getElementById("check").innerHTML="";
+			},5000);
+		}
+	}
+	
+//Function for miner
+function hireMiner() {
+	if(mineCost.upgradeCount >= 1) {
+	if(wood.total >= minerCost.wood && food.total >= minerCost.food && gold.total >= minerCost.gold && iron.total >= minerCost.iron) {
+	iron.idleRate += minerCost.idleBoost;
+	wood.total -= minerCost.wood;
+	iron.total -= minerCost.iron;
+	gold.total -= minerCost.gold;
+	food.total -= minerCost.food;
+	minerCost.upgradeCount += 1;
+	document.getElementById("minerCount").innerHTML=minerCost.upgradeCount;
+	something = minerCost;
+	serfCost(something);
+		}
+	else {
+	//insert error message to remove itself after 5 seconds
+	document.getElementById("check").innerHTML="<span id='test'>You can not afford this yet.</span><br>Wood: "+minerCost.wood+"<br>Food: "+minerCost.food+"<br>Gold: "+minerCost.gold+"<br>Iron: "+minerCost.iron;
+	 setTimeout(function(){
+         document.getElementById("check").innerHTML="";
+			},5000);
+		}
+	}
+	else {
+	//insert error message to remove itself after 5 seconds
+	document.getElementById("check").innerHTML="<span id='test'>You require a Mine first.</span>";
 	 setTimeout(function(){
          document.getElementById("check").innerHTML="";
 			},5000);
@@ -453,30 +673,70 @@ function mineDescripition() {
 			},5000);
 	}
 
+function lumberjackDescripition() {
+	document.getElementById("check").innerHTML="Wood: "+lumberjackCost.wood+"<br>Food: "+lumberjackCost.food+"<br>Gold: "+lumberjackCost.gold+"<br>Iron: "+lumberjackCost.iron;
+	 setTimeout(function(){
+         document.getElementById("check").innerHTML="";
+			},5000);
+	}
+	
+function taxcollectorDescripition() {
+	document.getElementById("check").innerHTML="Wood: "+taxcollectorCost.wood+"<br>Food: "+taxcollectorCost.food+"<br>Gold: "+taxcollectorCost.gold+"<br>Iron: "+taxcollectorCost.iron;
+	 setTimeout(function(){
+         document.getElementById("check").innerHTML="";
+			},5000);
+	}
+	
+function farmerDescripition() {
+	document.getElementById("check").innerHTML="Wood: "+farmerCost.wood+"<br>Food: "+farmerCost.food+"<br>Gold: "+farmerCost.gold+"<br>Iron: "+farmerCost.iron;
+	 setTimeout(function(){
+         document.getElementById("check").innerHTML="";
+			},5000);
+	}
+	
+function minerDescripition() {
+	document.getElementById("check").innerHTML="Wood: "+minerCost.wood+"<br>Food: "+minerCost.food+"<br>Gold: "+minerCost.gold+"<br>Iron: "+minerCost.iron;
+	 setTimeout(function(){
+         document.getElementById("check").innerHTML="";
+			},5000);
+	}
+//populates initial upgrade/building levels
+
 //starts off game state
 requestAnimationFrame(mainLoop);
+
 //runs idle rates function every 1 second
 setInterval(idleUpdate, 1000);
+
+//REDO NOT ENOUGH RESOURCE ERROR MESSAGES TO USE SPAN ID DESCRIPITIONS ??~!
+//TIE THE LOG DISAPPEARING IN LINE WITH WHEN SOMETHING IS GATHERED.
+//tie number of lumber jacks to lumber camps if go over then diminishing returns is activated.
+//GAME IDEA MARKETPLACE TRADING - DIRECTLY LIKE AOE2
+//BRITISH SPEAKING VOICES LIKE STRONGHOLD SERIES
 </script>
-<br>
+<div class="split right"><div class="topGap">
 <h2>Clickers</h2>
-<button onclick="gatherWood()">Gather Wood</button>
-<button onclick="gatherGold()">Collect Gold</button>
-<button onclick="gatherFood()">Forage Food</button>
-<button onclick="gatherIron()">Mine Iron</button>
+<button class="button1" onclick="gatherWood()">Gather Wood</button>
+<button class="button1" onclick="gatherGold()">Collect Gold</button>
+<button class="button1" onclick="gatherFood()">Forage Food</button>
+<button class="button1" onclick="gatherIron()">Mine Iron</button>
 <br><br>
 <h2>Upgrades</h2>
-<div onmouseenter="axeDescripition()"><button onclick="upgradeAxe()">Upgrade Axe</button></div>
-<div onmouseenter="ratesDescripition()"><button onclick="upgradeRates()">Increase Tax Rate</button></div>
-<div onmouseenter="hoeDescripition()"><button onclick="upgradeHoe()">Upgrade Hoe</button></div>
-<div onmouseenter="pickDescripition()"><button onclick="upgradePick()">Upgrade Pick</button></div>
+<span onmouseenter="axeDescripition()"><button class="button1" onclick="upgradeAxe()">Upgrade Axe<p>Level: <span id="axeCount"></span</p></button></span>
+<span onmouseenter="ratesDescripition()"><button class="button1" onclick="upgradeRates()">Increase Tax Rate<p>Level: <span id="raiseCount"></button></span>
+<span onmouseenter="hoeDescripition()"><button class="button1" onclick="upgradeHoe()">Upgrade Hoe<p>Level: <span id="hoeCount"></button></span>
+<span onmouseenter="pickDescripition()"><button class="button1" onclick="upgradePick()">Upgrade Pickaxe<p>Level: <span id="pickCount"></button></span>
 <br><br>
 <h2>Buildings</h2>
-<div onmouseenter="lumbercampDescripition()"><button onclick="buildingLumbercamp()">Build Lumber Camp</button></div>
-<div onmouseenter="treasuryDescripition()"><button onclick="buildingTreasury()">Build Treasury</button></div>
-<div onmouseenter="millDescripition()"><button onclick="buildingMill()">Build Mill</button></div>
-<div onmouseenter="mineDescripition()"><button onclick="buildingMine()">Build Mine</button></div>
-<h3>Log:</h3>
-<p id="check"></p>
+<span onmouseenter="lumbercampDescripition()"><button class="button1" onclick="buildingLumbercamp()">Build Lumber Camp<p>Level: <span id="lumbercampCount"></span</p></button></span>
+<span onmouseenter="treasuryDescripition()"><button class="button1" onclick="buildingTreasury()">Build Treasury<p>Level: <span id="treasuryCount"></span</p></button></span>
+<span onmouseenter="millDescripition()"><button class="button1" onclick="buildingMill()">Build Mill<p>Level: <span id="millCount"></span</p></button></span>
+<span onmouseenter="mineDescripition()"><button class="button1" onclick="buildingMine()">Build Mine<p>Level: <span id="mineCount"></span</p></button></span>
+<h2>Serfs</h2>
+<span onmouseenter="lumberjackDescripition()"><button class="button1" onclick="hireLumberjack()">Hire Lumber Jack<p>Lumber Jacks: <span id="lumberjackCount"></span</p></button></span>
+<span onmouseenter="taxcollectorDescripition()"><button class="button1" onclick="hireTaxCollector()">Hire Tax Collector<p>Tax Collectors: <span id="taxcollectorCount"></span</p></button></span>
+<span onmouseenter="farmerDescripition()"><button class="button1" onclick="hireFarmer()">Hire Farmer<p>Farmers: <span id="farmerCount"></span</p></button></span>
+<span onmouseenter="minerDescripition()"><button class="button1" onclick="hireMiner()">Hire Mine<p>Miners: <span id="minerCount"></span</p></button></span>
+</div></div>
 </body>
 </html>
