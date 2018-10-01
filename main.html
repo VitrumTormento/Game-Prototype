@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Idle Clicker Prototype</title>
+	<link rel="stylesheet" href="gamePrototype.css">
 </head>
 <body>
 <h1>Idle Clicker Prototype</h1>
@@ -249,10 +250,10 @@ function upgradeAxe() {
 		}
 	else {
 	//insert error message to remove itself after 5 seconds
-	document.getElementById("check").innerHTML="You can not afford this yet.";
+	document.getElementById("check").innerHTML="<span id='test'>You can not afford this yet.</span><br>Wood: "+axeCost.wood+"<br>Food: "+axeCost.food+"<br>Gold: "+axeCost.gold+"<br>Iron: "+axeCost.iron;
 	 setTimeout(function(){
          document.getElementById("check").innerHTML="";
-			},3000);
+			},5000);
 		}
 	}
 
@@ -269,10 +270,10 @@ function upgradeRates() {
 		}
 	else {
 	//insert error message to remove itself after 5 seconds
-	document.getElementById("check").innerHTML="You can not afford this yet.";
+	document.getElementById("check").innerHTML="<span id='test'>You can not afford this yet.</span><br>Wood: "+raiseCost.wood+"<br>Food: "+raiseCost.food+"<br>Gold: "+raiseCost.gold+"<br>Iron: "+raiseCost.iron;
 	 setTimeout(function(){
          document.getElementById("check").innerHTML="";
-			},3000);
+			},5000);
 		}
 	}
 
@@ -289,17 +290,17 @@ function upgradeHoe() {
 		}
 	else {
 	//insert error message to remove itself after 5 seconds
-	document.getElementById("check").innerHTML="You can not afford this yet.";
+	document.getElementById("check").innerHTML="<span id='test'>You can not afford this yet.</span><br>Wood: "+hoeCost.wood+"<br>Food: "+hoeCost.food+"<br>Gold: "+hoeCost.gold+"<br>Iron: "+hoeCost.iron;
 	 setTimeout(function(){
          document.getElementById("check").innerHTML="";
-			},3000);
+			},5000);
 		}
 	}
 
 //Function for pick upgrades
 function upgradePick() {
 	if(wood.total >= pickCost.wood && food.total >= pickCost.food && gold.total >= pickCost.gold && iron.total >= pickCost.iron) {
-	wood.clickerRate += pickCost.clickerBoost;
+	iron.clickerRate += pickCost.clickerBoost;
 	wood.total -= pickCost.wood;
 	iron.total -= pickCost.iron;
 	gold.total -= pickCost.gold;
@@ -309,10 +310,10 @@ function upgradePick() {
 		}
 	else {
 	//insert error message to remove itself after 5 seconds
-	document.getElementById("check").innerHTML="You can not afford this yet.";
+	document.getElementById("check").innerHTML="<span id='test'>You can not afford this yet.</span><br>Wood: "+pickCost.wood+"<br>Food: "+pickCost.food+"<br>Gold: "+pickCost.gold+"<br>Iron: "+pickCost.iron;
 	 setTimeout(function(){
          document.getElementById("check").innerHTML="";
-			},3000);
+			},5000);
 		}
 	}
 
@@ -329,10 +330,10 @@ function buildingLumbercamp() {
 		}
 	else {
 	//insert error message to remove itself after 5 seconds
-	document.getElementById("check").innerHTML="You can not afford this yet.";
+	document.getElementById("check").innerHTML="<span id='test'>You can not afford this yet.</span><br>Wood: "+lumbercampCost.wood+"<br>Food: "+lumbercampCost.food+"<br>Gold: "+lumbercampCost.gold+"<br>Iron: "+lumbercampCost.iron;
 	 setTimeout(function(){
          document.getElementById("check").innerHTML="";
-			},3000);
+			},5000);
 		}
 	}
 
@@ -349,10 +350,10 @@ function buildingMill() {
 		}
 	else {
 	//insert error message to remove itself after 5 seconds
-	document.getElementById("check").innerHTML="You can not afford this yet.";
+	document.getElementById("check").innerHTML="<span id='test'>You can not afford this yet.</span><br>Wood: "+millCost.wood+"<br>Food: "+millCost.food+"<br>Gold: "+millCost.gold+"<br>Iron: "+millCost.iron;
 	 setTimeout(function(){
          document.getElementById("check").innerHTML="";
-			},3000);
+			},5000);
 		}
 	}
 
@@ -369,10 +370,10 @@ function buildingMine() {
 		}
 	else {
 	//insert error message to remove itself after 5 seconds
-	document.getElementById("check").innerHTML="You can not afford this yet.";
+	document.getElementById("check").innerHTML="<span id='test'>You can not afford this yet.</span><br>Wood: "+mineCost.wood+"<br>Food: "+mineCost.food+"<br>Gold: "+mineCost.gold+"<br>Iron: "+mineCost.iron;
 	 setTimeout(function(){
          document.getElementById("check").innerHTML="";
-			},3000);
+			},5000);
 		}
 	}
 
@@ -389,11 +390,67 @@ function buildingTreasury() {
 		}
 	else {
 	//insert error message to remove itself after 5 seconds
-	document.getElementById("check").innerHTML="You can not afford this yet.";
+	document.getElementById("check").innerHTML="<span id='test'>You can not afford this yet.</span><br>Wood: "+treasuryCost.wood+"<br>Food: "+treasuryCost.food+"<br>Gold: "+treasuryCost.gold+"<br>Iron: "+treasuryCost.iron;
 	 setTimeout(function(){
          document.getElementById("check").innerHTML="";
-			},3000);
+			},5000);
 		}
+	}
+	
+function axeDescripition() {
+	document.getElementById("check").innerHTML="Wood: "+axeCost.wood+"<br>Food: "+axeCost.food+"<br>Gold: "+axeCost.gold+"<br>Iron: "+axeCost.iron;
+	 setTimeout(function(){
+         document.getElementById("check").innerHTML="";
+			},5000);
+	}
+
+function ratesDescripition() {
+	document.getElementById("check").innerHTML="Wood: "+raiseCost.wood+"<br>Food: "+raiseCost.food+"<br>Gold: "+raiseCost.gold+"<br>Iron: "+raiseCost.iron;
+	 setTimeout(function(){
+         document.getElementById("check").innerHTML="";
+			},5000);
+	}
+	
+function hoeDescripition() {
+	document.getElementById("check").innerHTML="Wood: "+hoeCost.wood+"<br>Food: "+hoeCost.food+"<br>Gold: "+hoeCost.gold+"<br>Iron: "+hoeCost.iron;
+	 setTimeout(function(){
+         document.getElementById("check").innerHTML="";
+			},5000);
+	}
+	
+function pickDescripition() {
+	document.getElementById("check").innerHTML="Wood: "+pickCost.wood+"<br>Food: "+pickCost.food+"<br>Gold: "+pickCost.gold+"<br>Iron: "+pickCost.iron;
+	 setTimeout(function(){
+         document.getElementById("check").innerHTML="";
+			},5000);
+	}
+
+function lumbercampDescripition() {
+	document.getElementById("check").innerHTML="Wood: "+lumbercampCost.wood+"<br>Food: "+lumbercampCost.food+"<br>Gold: "+lumbercampCost.gold+"<br>Iron: "+lumbercampCost.iron;
+	 setTimeout(function(){
+         document.getElementById("check").innerHTML="";
+			},5000);
+	}
+	
+function treasuryDescripition() {
+	document.getElementById("check").innerHTML="Wood: "+treasuryCost.wood+"<br>Food: "+treasuryCost.food+"<br>Gold: "+treasuryCost.gold+"<br>Iron: "+treasuryCost.iron;
+	 setTimeout(function(){
+         document.getElementById("check").innerHTML="";
+			},5000);
+	}
+	
+function millDescripition() {
+	document.getElementById("check").innerHTML="Wood: "+millCost.wood+"<br>Food: "+millCost.food+"<br>Gold: "+millCost.gold+"<br>Iron: "+millCost.iron;
+	 setTimeout(function(){
+         document.getElementById("check").innerHTML="";
+			},5000);
+	}
+	
+function mineDescripition() {
+	document.getElementById("check").innerHTML="Wood: "+mineCost.wood+"<br>Food: "+mineCost.food+"<br>Gold: "+mineCost.gold+"<br>Iron: "+mineCost.iron;
+	 setTimeout(function(){
+         document.getElementById("check").innerHTML="";
+			},5000);
 	}
 
 //starts off game state
@@ -409,16 +466,16 @@ setInterval(idleUpdate, 1000);
 <button onclick="gatherIron()">Mine Iron</button>
 <br><br>
 <h2>Upgrades</h2>
-<button onclick="upgradeAxe()">Upgrade Axe</button>
-<button onclick="upgradeRates()">Increase Tax Rate</button>
-<button onclick="upgradeHoe()">Upgrade Hoe</button>
-<button onclick="upgradePick()">Upgrade Pick</button>
+<div onmouseenter="axeDescripition()"><button onclick="upgradeAxe()">Upgrade Axe</button></div>
+<div onmouseenter="ratesDescripition()"><button onclick="upgradeRates()">Increase Tax Rate</button></div>
+<div onmouseenter="hoeDescripition()"><button onclick="upgradeHoe()">Upgrade Hoe</button></div>
+<div onmouseenter="pickDescripition()"><button onclick="upgradePick()">Upgrade Pick</button></div>
 <br><br>
 <h2>Buildings</h2>
-<button onclick="buildingLumbercamp()">Build Lumber Camp</button>
-<button onclick="buildingTreasury()">Build Treasury</button>
-<button onclick="buildingMill()">Build Mill</button>
-<button onclick="buildingMine()">Build Mine</button>
+<div onmouseenter="lumbercampDescripition()"><button onclick="buildingLumbercamp()">Build Lumber Camp</button></div>
+<div onmouseenter="treasuryDescripition()"><button onclick="buildingTreasury()">Build Treasury</button></div>
+<div onmouseenter="millDescripition()"><button onclick="buildingMill()">Build Mill</button></div>
+<div onmouseenter="mineDescripition()"><button onclick="buildingMine()">Build Mine</button></div>
 <h3>Log:</h3>
 <p id="check"></p>
 </body>
