@@ -1,5 +1,9 @@
 # Game-Prototype
 
+Update 1.1
+Log message rewrite - eliminated 100 lines of code
+Slight bug fix
+
 Update 1.0
 Incorporated Serfs: idle rate defined by respective resource clicker rate - requires building lvl 1 to hire
 Implemented levels to upgrades/buildings and a serf count
