@@ -24,18 +24,15 @@ var something = null;
 var increase = {
 	upgrade:1.15,
 	building:1.25,
-	serf:1.2
+	serf:1.25
 	}
 	
-	
-	//SERFS
-	//LUMBER JACK - TAX COLLECTOR - FA
 //RESOURCES
 //Declares wood resource variables	
 var wood = {
     clickerRate:1,
 	idleRate:0,
-	total:0,
+	total:500,
 	secondTotal:0,
 	earningSec:0,
 	}
@@ -44,7 +41,7 @@ var wood = {
 var food = {
     clickerRate:1,
 	idleRate:0, 
-	total:0,
+	total:500,
 	secondTotal:0,
 	earningSec:0,
 	}
@@ -53,7 +50,7 @@ var food = {
 var gold = {
     clickerRate:1,
 	idleRate:0, 
-	total:0,
+	total:500,
 	secondTotal:0,
 	earningSec:0,
 	}
@@ -62,7 +59,7 @@ var gold = {
 var iron = {
     clickerRate:1,
 	idleRate:0,
-	total:0,
+	total:500,
 	secondTotal:0,	
 	earningSec:0,
 	}
@@ -112,7 +109,7 @@ var pickCost = {
 //Declares lumber camp cost variables
 var lumbercampCost = {
 	idleBoost:0.2,
-	wood:30,
+	wood:50,
 	food:10,
 	gold:10,
 	iron:10,
@@ -124,7 +121,7 @@ var treasuryCost = {
 	idleBoost:0.2,
 	wood:10,
 	food:10,
-	gold:30,
+	gold:50,
 	iron:10,
 	upgradeCount:0,
 	}
@@ -133,7 +130,7 @@ var treasuryCost = {
 var millCost = {
 	idleBoost:0.2,
 	wood:10,
-	food:30,
+	food:50,
 	gold:10,
 	iron:10,
 	upgradeCount:0,
@@ -145,7 +142,7 @@ var mineCost = {
 	wood:10,
 	food:10,
 	gold:10,
-	iron:30,
+	iron:50,
 	upgradeCount:0,
 	}
 
@@ -288,6 +285,7 @@ function gatherWood() {
 	setTimeout(function(){
          wood.secondTotal -= wood.clickerRate; //research moving average to smooth even further
 			},1000);
+	document.getElementById("check").innerHTML=""; //removes log text *new as of alpha 1.1
 	}
 
 //On click action for Gather Food
@@ -297,6 +295,7 @@ function gatherFood() {
 		setTimeout(function(){
          food.secondTotal -= food.clickerRate;
 			},1000);
+	document.getElementById("check").innerHTML=""; //removes log text *new as of alpha 1.1
 	}
 
 //On click action for Gather Gold
@@ -306,6 +305,7 @@ function gatherGold() {
 		setTimeout(function(){
          gold.secondTotal -= gold.clickerRate;
 			},1000);
+	document.getElementById("check").innerHTML=""; //removes log text *new as of alpha 1.1
 	}
 
 //On click action for Gather Iron
@@ -315,6 +315,7 @@ function gatherIron() {
 		setTimeout(function(){
          iron.secondTotal -= iron.clickerRate;
 			},1000);
+	document.getElementById("check").innerHTML=""; //removes log text *new as of alpha 1.1
 	}
 
 //Function for axe upgrades
@@ -329,13 +330,11 @@ function upgradeAxe() {
 	document.getElementById("axeCount").innerHTML=axeCost.upgradeCount;
 	something = axeCost;
 	upgradeCost(something);
+	axeDescripition();
 		}
 	else {
 	//insert error message to remove itself after 5 seconds
 	document.getElementById("check").innerHTML="<span id='test'>You can not afford this yet.</span><br>Wood: "+axeCost.wood+"<br>Food: "+axeCost.food+"<br>Gold: "+axeCost.gold+"<br>Iron: "+axeCost.iron;
-	 setTimeout(function(){
-         document.getElementById("check").innerHTML="";
-			},5000);
 		}
 	}
 
@@ -351,13 +350,11 @@ function upgradeRates() {
 	document.getElementById("raiseCount").innerHTML=raiseCost.upgradeCount;
 	something = raiseCost;
 	upgradeCost(something);
+	ratesDescripition();
 		}
 	else {
 	//insert error message to remove itself after 5 seconds
 	document.getElementById("check").innerHTML="<span id='test'>You can not afford this yet.</span><br>Wood: "+raiseCost.wood+"<br>Food: "+raiseCost.food+"<br>Gold: "+raiseCost.gold+"<br>Iron: "+raiseCost.iron;
-	 setTimeout(function(){
-         document.getElementById("check").innerHTML="";
-			},5000);
 		}
 	}
 
@@ -373,13 +370,11 @@ function upgradeHoe() {
 	document.getElementById("hoeCount").innerHTML=hoeCost.upgradeCount;
 	something = hoeCost;
 	upgradeCost(something);
+	hoeDescripition();
 		}
 	else {
 	//insert error message to remove itself after 5 seconds
 	document.getElementById("check").innerHTML="<span id='test'>You can not afford this yet.</span><br>Wood: "+hoeCost.wood+"<br>Food: "+hoeCost.food+"<br>Gold: "+hoeCost.gold+"<br>Iron: "+hoeCost.iron;
-	 setTimeout(function(){
-         document.getElementById("check").innerHTML="";
-			},5000);
 		}
 	}
 
@@ -395,14 +390,12 @@ function upgradePick() {
 	document.getElementById("pickCount").innerHTML=pickCost.upgradeCount;
 	something = pickCost;
 	upgradeCost(something);
+	pickDescripition();
 		}
 	else {
 	//insert error message to remove itself after 5 seconds
 	document.getElementById("check").innerHTML="<span id='test'>You can not afford this yet.</span><br>Wood: "+pickCost.wood+"<br>Food: "+pickCost.food+"<br>Gold: "+pickCost.gold+"<br>Iron: "+pickCost.iron;
-	 setTimeout(function(){
-         document.getElementById("check").innerHTML="";
-			},5000);
-		}
+	}
 	}
 
 //Function for lumber camp building
@@ -417,13 +410,11 @@ function buildingLumbercamp() {
 	document.getElementById("lumbercampCount").innerHTML=lumbercampCost.upgradeCount;
 	something = lumbercampCost;
 	buildingCost(something);
+	lumbercampDescripition();
 		}
 	else {
 	//insert error message to remove itself after 5 seconds
 	document.getElementById("check").innerHTML="<span id='test'>You can not afford this yet.</span><br>Wood: "+lumbercampCost.wood+"<br>Food: "+lumbercampCost.food+"<br>Gold: "+lumbercampCost.gold+"<br>Iron: "+lumbercampCost.iron;
-	 setTimeout(function(){
-         document.getElementById("check").innerHTML="";
-			},5000);
 		}
 	}
 
@@ -439,13 +430,11 @@ function buildingMill() {
 	document.getElementById("millCount").innerHTML=millCost.upgradeCount;
 	something = millCost;
 	buildingCost(something);
+	millDescripition();
 		}
 	else {
 	//insert error message to remove itself after 5 seconds
 	document.getElementById("check").innerHTML="<span id='test'>You can not afford this yet.</span><br>Wood: "+millCost.wood+"<br>Food: "+millCost.food+"<br>Gold: "+millCost.gold+"<br>Iron: "+millCost.iron;
-	 setTimeout(function(){
-         document.getElementById("check").innerHTML="";
-			},5000);
 		}
 	}
 
@@ -461,13 +450,11 @@ function buildingMine() {
 	document.getElementById("mineCount").innerHTML=mineCost.upgradeCount;
 	something = mineCost;
 	buildingCost(something);
+	mineDescripition();
 		}
 	else {
 	//insert error message to remove itself after 5 seconds
 	document.getElementById("check").innerHTML="<span id='test'>You can not afford this yet.</span><br>Wood: "+mineCost.wood+"<br>Food: "+mineCost.food+"<br>Gold: "+mineCost.gold+"<br>Iron: "+mineCost.iron;
-	 setTimeout(function(){
-         document.getElementById("check").innerHTML="";
-			},5000);
 		}
 	}
 
@@ -483,13 +470,11 @@ function buildingTreasury() {
 	document.getElementById("treasuryCount").innerHTML=treasuryCost.upgradeCount;
 	something = treasuryCost;
 	buildingCost(something);
+	treasuryDescripition();
 		}
 	else {
 	//insert error message to remove itself after 5 seconds
 	document.getElementById("check").innerHTML="<span id='test'>You can not afford this yet.</span><br>Wood: "+treasuryCost.wood+"<br>Food: "+treasuryCost.food+"<br>Gold: "+treasuryCost.gold+"<br>Iron: "+treasuryCost.iron;
-	 setTimeout(function(){
-         document.getElementById("check").innerHTML="";
-			},5000);
 		}
 	}
 	
@@ -506,21 +491,16 @@ function hireLumberjack() {
 	document.getElementById("lumberjackCount").innerHTML=lumberjackCost.upgradeCount;
 	something = lumberjackCost;
 	serfCost(something);
+	lumberjackDescripition();
 	}
 	else {
 	//insert error message to remove itself after 5 seconds
 	document.getElementById("check").innerHTML="<span id='test'>You can not afford this yet.</span><br>Wood: "+lumberjackCost.wood+"<br>Food: "+lumberjackCost.food+"<br>Gold: "+lumberjackCost.gold+"<br>Iron: "+lumberjackCost.iron;
-	 setTimeout(function(){
-         document.getElementById("check").innerHTML="";
-			},5000);
 		}
 	}
 	else {
 	//insert error message to remove itself after 5 seconds
 	document.getElementById("check").innerHTML="<span id='test'>You require a Lumber Camp first.</span>";
-	 setTimeout(function(){
-         document.getElementById("check").innerHTML="";
-			},5000);
 		}
 	}
 
@@ -537,21 +517,16 @@ function hireTaxCollector() {
 	document.getElementById("taxcollectorCount").innerHTML=taxcollectorCost.upgradeCount;
 	something = taxcollectorCost;
 	serfCost(something);
+	taxcollectorDescripition();
 		}
 	else {
 	//insert error message to remove itself after 5 seconds
 	document.getElementById("check").innerHTML="<span id='test'>You can not afford this yet.</span><br>Wood: "+taxcollectorCost.wood+"<br>Food: "+taxcollectorCost.food+"<br>Gold: "+taxcollectorCost.gold+"<br>Iron: "+taxcollectorCost.iron;
-	 setTimeout(function(){
-         document.getElementById("check").innerHTML="";
-			},5000);
 		}
 	}
 	else {
 	//insert error message to remove itself after 5 seconds
 	document.getElementById("check").innerHTML="<span id='test'>You require a Treasury first.</span>";
-	 setTimeout(function(){
-         document.getElementById("check").innerHTML="";
-			},5000);
 		}
 	}
 	
@@ -568,21 +543,16 @@ function hireFarmer() {
 	document.getElementById("farmerCount").innerHTML=farmerCost.upgradeCount;
 	something = farmerCost;
 	serfCost(something);
+	farmerDescripition();
 		}
 	else {
 	//insert error message to remove itself after 5 seconds
 	document.getElementById("check").innerHTML="<span id='test'>You can not afford this yet.</span><br>Wood: "+farmerCost.wood+"<br>Food: "+farmerCost.food+"<br>Gold: "+farmerCost.gold+"<br>Iron: "+farmerCost.iron;
-	 setTimeout(function(){
-         document.getElementById("check").innerHTML="";
-			},5000);
 		}
 	} 
 	else {
 	//insert error message to remove itself after 5 seconds
 	document.getElementById("check").innerHTML="<span id='test'>You require a Mill first.</span>";
-	 setTimeout(function(){
-         document.getElementById("check").innerHTML="";
-			},5000);
 		}
 	}
 	
@@ -599,108 +569,66 @@ function hireMiner() {
 	document.getElementById("minerCount").innerHTML=minerCost.upgradeCount;
 	something = minerCost;
 	serfCost(something);
+	minerDescripition();
 		}
 	else {
 	//insert error message to remove itself after 5 seconds
 	document.getElementById("check").innerHTML="<span id='test'>You can not afford this yet.</span><br>Wood: "+minerCost.wood+"<br>Food: "+minerCost.food+"<br>Gold: "+minerCost.gold+"<br>Iron: "+minerCost.iron;
-	 setTimeout(function(){
-         document.getElementById("check").innerHTML="";
-			},5000);
 		}
 	}
 	else {
 	//insert error message to remove itself after 5 seconds
 	document.getElementById("check").innerHTML="<span id='test'>You require a Mine first.</span>";
-	 setTimeout(function(){
-         document.getElementById("check").innerHTML="";
-			},5000);
 		}
 	}
 	
 function axeDescripition() {
 	document.getElementById("check").innerHTML="Wood: "+axeCost.wood+"<br>Food: "+axeCost.food+"<br>Gold: "+axeCost.gold+"<br>Iron: "+axeCost.iron;
-	 setTimeout(function(){
-         document.getElementById("check").innerHTML="";
-			},5000);
 	}
 
 function ratesDescripition() {
 	document.getElementById("check").innerHTML="Wood: "+raiseCost.wood+"<br>Food: "+raiseCost.food+"<br>Gold: "+raiseCost.gold+"<br>Iron: "+raiseCost.iron;
-	 setTimeout(function(){
-         document.getElementById("check").innerHTML="";
-			},5000);
 	}
 	
 function hoeDescripition() {
 	document.getElementById("check").innerHTML="Wood: "+hoeCost.wood+"<br>Food: "+hoeCost.food+"<br>Gold: "+hoeCost.gold+"<br>Iron: "+hoeCost.iron;
-	 setTimeout(function(){
-         document.getElementById("check").innerHTML="";
-			},5000);
 	}
 	
 function pickDescripition() {
 	document.getElementById("check").innerHTML="Wood: "+pickCost.wood+"<br>Food: "+pickCost.food+"<br>Gold: "+pickCost.gold+"<br>Iron: "+pickCost.iron;
-	 setTimeout(function(){
-         document.getElementById("check").innerHTML="";
-			},5000);
 	}
 
 function lumbercampDescripition() {
 	document.getElementById("check").innerHTML="Wood: "+lumbercampCost.wood+"<br>Food: "+lumbercampCost.food+"<br>Gold: "+lumbercampCost.gold+"<br>Iron: "+lumbercampCost.iron;
-	 setTimeout(function(){
-         document.getElementById("check").innerHTML="";
-			},5000);
 	}
 	
 function treasuryDescripition() {
 	document.getElementById("check").innerHTML="Wood: "+treasuryCost.wood+"<br>Food: "+treasuryCost.food+"<br>Gold: "+treasuryCost.gold+"<br>Iron: "+treasuryCost.iron;
-	 setTimeout(function(){
-         document.getElementById("check").innerHTML="";
-			},5000);
 	}
 	
 function millDescripition() {
 	document.getElementById("check").innerHTML="Wood: "+millCost.wood+"<br>Food: "+millCost.food+"<br>Gold: "+millCost.gold+"<br>Iron: "+millCost.iron;
-	 setTimeout(function(){
-         document.getElementById("check").innerHTML="";
-			},5000);
 	}
 	
 function mineDescripition() {
 	document.getElementById("check").innerHTML="Wood: "+mineCost.wood+"<br>Food: "+mineCost.food+"<br>Gold: "+mineCost.gold+"<br>Iron: "+mineCost.iron;
-	 setTimeout(function(){
-         document.getElementById("check").innerHTML="";
-			},5000);
 	}
 
 function lumberjackDescripition() {
 	document.getElementById("check").innerHTML="Wood: "+lumberjackCost.wood+"<br>Food: "+lumberjackCost.food+"<br>Gold: "+lumberjackCost.gold+"<br>Iron: "+lumberjackCost.iron;
-	 setTimeout(function(){
-         document.getElementById("check").innerHTML="";
-			},5000);
 	}
 	
 function taxcollectorDescripition() {
 	document.getElementById("check").innerHTML="Wood: "+taxcollectorCost.wood+"<br>Food: "+taxcollectorCost.food+"<br>Gold: "+taxcollectorCost.gold+"<br>Iron: "+taxcollectorCost.iron;
-	 setTimeout(function(){
-         document.getElementById("check").innerHTML="";
-			},5000);
 	}
 	
 function farmerDescripition() {
 	document.getElementById("check").innerHTML="Wood: "+farmerCost.wood+"<br>Food: "+farmerCost.food+"<br>Gold: "+farmerCost.gold+"<br>Iron: "+farmerCost.iron;
-	 setTimeout(function(){
-         document.getElementById("check").innerHTML="";
-			},5000);
 	}
 	
 function minerDescripition() {
 	document.getElementById("check").innerHTML="Wood: "+minerCost.wood+"<br>Food: "+minerCost.food+"<br>Gold: "+minerCost.gold+"<br>Iron: "+minerCost.iron;
-	 setTimeout(function(){
-         document.getElementById("check").innerHTML="";
-			},5000);
 	}
-//populates initial upgrade/building levels
 
 //starts off game state
 requestAnimationFrame(mainLoop);
@@ -708,6 +636,7 @@ requestAnimationFrame(mainLoop);
 //runs idle rates function every 1 second
 setInterval(idleUpdate, 1000);
 
+//ADD BOOST TO SERF IDLE RATES WITH BUILDING UPGRADE - PREVIOUS METHOD FAILED :/
 //REDO NOT ENOUGH RESOURCE ERROR MESSAGES TO USE SPAN ID DESCRIPITIONS ??~!
 //TIE THE LOG DISAPPEARING IN LINE WITH WHEN SOMETHING IS GATHERED.
 //tie number of lumber jacks to lumber camps if go over then diminishing returns is activated.
@@ -736,7 +665,7 @@ setInterval(idleUpdate, 1000);
 <span onmouseenter="lumberjackDescripition()"><button class="button1" onclick="hireLumberjack()">Hire Lumber Jack<p>Lumber Jacks: <span id="lumberjackCount"></span</p></button></span>
 <span onmouseenter="taxcollectorDescripition()"><button class="button1" onclick="hireTaxCollector()">Hire Tax Collector<p>Tax Collectors: <span id="taxcollectorCount"></span</p></button></span>
 <span onmouseenter="farmerDescripition()"><button class="button1" onclick="hireFarmer()">Hire Farmer<p>Farmers: <span id="farmerCount"></span</p></button></span>
-<span onmouseenter="minerDescripition()"><button class="button1" onclick="hireMiner()">Hire Mine<p>Miners: <span id="minerCount"></span</p></button></span>
+<span onmouseenter="minerDescripition()"><button class="button1" onclick="hireMiner()">Hire Miner<p>Miners: <span id="minerCount"></span</p></button></span>
 </div></div>
 </body>
 </html>
