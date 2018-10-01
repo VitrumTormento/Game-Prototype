@@ -12,7 +12,7 @@ Some CSS implementation for screen resolutions/ratios and green buttons!
 
 Update 0.5
 Added descriptions of upgrade/building costs when mouse is detected on div element
-Added slight styling to differentiate log messages.
+Added slight styling to differentiate log messages
 
 Update 0.4
 New method for calculating earning per second counter - removes the requirement to reset value to zero
