@@ -1,5 +1,11 @@
 # Game-Prototype
 
+Update 1.0
+Incorporated Serfs: idle rate defined by respective resource clicker rate - requires building lvl 1 to hire
+Implemented levels to upgrades/buildings and a serf count
+Modified cost and cost increase values
+Some CSS implementation for screen resolutions/ratios and green buttons!
+
 Update 0.5
 Added descriptions of upgrade/building costs when mouse is detected on div element
 Added slight styling to differentiate log messages.
