@@ -6,7 +6,7 @@
 </head>
 <body onload="startLevels()">
 <div class="split left"><div class="centered">
-<h1>Idle Clicker Prototype</h1>
+<h1>The Medieval Idle Clicker</h1>
 <h2>Resources</h2>
 <p>Wood: <span id="wood"></span>  (<span id="woodEarningSec"></span>/sec)</p>
 <p>Gold: <span id="gold"></span>  (<span id="goldEarningSec"></span>/sec)</p>
@@ -24,44 +24,72 @@ var something = null;
 var increase = {
 	upgrade:1.15,
 	building:1.25,
-	serf:1.25
+	serf:1.25,
 	}
-	
+
+var general = {
+	currentTime:0,
+	}	
+
 //RESOURCES
 //Declares wood resource variables	
 var wood = {
     clickerRate:1,
 	idleRate:0,
-	total:0,
+	total:100,
 	secondTotal:0,
 	earningSec:0,
+	lastClick:0,
+	array:new Array(50).fill(0),
+	timeArray:new Array (50).fill(0),
+	arrayTotal:0,
+	timeDiff:0,
+	timeDiff2:0,
 	}
 
 //Declares food resource variables
 var food = {
     clickerRate:1,
 	idleRate:0, 
-	total:0,
+	total:100,
 	secondTotal:0,
 	earningSec:0,
+	lastClick:0,
+	array:new Array(50).fill(0),
+	timeArray:new Array (50).fill(0),
+	arrayTotal:0,
+	timeDiff:0,
+	timeDiff2:0,
 	}
 
 //Declares gold resource variables
 var gold = {
     clickerRate:1,
 	idleRate:0, 
-	total:0,
+	total:100,
 	secondTotal:0,
 	earningSec:0,
+	lastClick:0,
+	array:new Array(50).fill(0),
+	timeArray:new Array (50).fill(0),
+	arrayTotal:0,
+	timeDiff:0,
+	timeDiff2:0,
 	}
 
 //Declares iron resource variables
 var iron = {
     clickerRate:1,
 	idleRate:0,
-	total:0,
+	total:100,
 	secondTotal:0,	
 	earningSec:0,
+	lastClick:0,
+	array:new Array(50).fill(0),
+	timeArray:new Array (50).fill(0),
+	arrayTotal:0,
+	timeDiff:0,
+	timeDiff2:0,
 	}
 
 //UPGRADES
@@ -214,36 +242,36 @@ function startLevels() {
 //Method to determine cost increase to upgrades
 function upgradeCost(something) {
 	something.wood *= increase.upgrade;
-	something.wood = Number(Math.round(something.wood+'e2')+'e-2')
+	something.wood = Number(Math.round(something.wood+'e2')+'e-2');
 	something.food *= increase.upgrade;
-	something.food = Number(Math.round(something.food+'e2')+'e-2')
+	something.food = Number(Math.round(something.food+'e2')+'e-2');
 	something.gold *= increase.upgrade;
-	something.gold = Number(Math.round(something.gold+'e2')+'e-2')
+	something.gold = Number(Math.round(something.gold+'e2')+'e-2');
 	something.iron *= increase.upgrade;
-	something.iron = Number(Math.round(something.iron+'e2')+'e-2')
+	something.iron = Number(Math.round(something.iron+'e2')+'e-2');
 	}
 
 //Method to determine cost increase to buildings
 function buildingCost(something) {
 	something.wood *= increase.building;
-	something.wood = Number(Math.round(something.wood+'e2')+'e-2')
+	something.wood = Number(Math.round(something.wood+'e2')+'e-2');
 	something.food *= increase.building;
-	something.food = Number(Math.round(something.food+'e2')+'e-2')
+	something.food = Number(Math.round(something.food+'e2')+'e-2');
 	something.gold *= increase.building;
-	something.gold = Number(Math.round(something.gold+'e2')+'e-2')
+	something.gold = Number(Math.round(something.gold+'e2')+'e-2');
 	something.iron *= increase.building;
-	something.iron = Number(Math.round(something.iron+'e2')+'e-2')
+	something.iron = Number(Math.round(something.iron+'e2')+'e-2');
 	}
 	
 function serfCost(something) {
 	something.wood *= increase.serf;
-	something.wood = Number(Math.round(something.wood+'e2')+'e-2')
+	something.wood = Number(Math.round(something.wood+'e2')+'e-2');
 	something.food *= increase.serf;
-	something.food = Number(Math.round(something.food+'e2')+'e-2')
+	something.food = Number(Math.round(something.food+'e2')+'e-2');
 	something.gold *= increase.serf;
-	something.gold = Number(Math.round(something.gold+'e2')+'e-2')
+	something.gold = Number(Math.round(something.gold+'e2')+'e-2');
 	something.iron *= increase.serf;
-	something.iron = Number(Math.round(something.iron+'e2')+'e-2')
+	something.iron = Number(Math.round(something.iron+'e2')+'e-2');
 	}
  
 //Method to add the value of idle incomes to respective resource totals
@@ -269,54 +297,123 @@ function earningSecValues() {
 	gold.earningSec = gold.idleRate + gold.secondTotal;
 	iron.earningSec = iron.idleRate + iron.secondTotal;
 	}
- 
-//Main Game loop - currently tied to monitor refresh rate, writes values to page
-function mainLoop() {
-    totalUpdate();
-	earningSecValues();
-	earningSecUpdate();
-    requestAnimationFrame(mainLoop);
+	
+function setTime() {
+	general.currentTime = new Date().getTime();
 	}
 
 //On click action for Gather Wood
 function gatherWood() {
 	wood.total += wood.clickerRate;
-	wood.secondTotal += wood.clickerRate;
-	setTimeout(function(){
-         wood.secondTotal -= wood.clickerRate; //research moving average to smooth even further
-			},1000);
+	wood.lastClick = new Date().getTime();
+	wood.timeArray.pop();	
+	wood.timeArray.unshift(wood.lastClick);
+	wood.array.pop();	
+	wood.array.unshift(wood.clickerRate);
 	document.getElementById("check").innerHTML=""; //removes log text *new as of alpha 1.1
+	}
+	
+function calculateTotalWood() {
+	wood.arrayTotal = wood.array.reduce((a, b) => a + b, 0);
+	wood.secondTotal = wood.arrayTotal;
+	}
+
+function timeCheckWood() {
+	wood.timeDiff = general.currentTime - wood.timeArray[49];
+	wood.timeDiff2 = general.currentTime - wood.lastClick;
+	if (wood.timeDiff >= 1000 && wood.arrayTotal != 0) {
+	wood.timeArray.pop();
+	wood.timeArray.unshift(0);
+	wood.array.pop();
+	wood.array.unshift(0);
+	} else {
+	}
 	}
 
 //On click action for Gather Food
 function gatherFood() {
 	food.total += food.clickerRate;
-	food.secondTotal += food.clickerRate;
-		setTimeout(function(){
-         food.secondTotal -= food.clickerRate;
-			},1000);
+	food.lastClick = new Date().getTime();
+	food.timeArray.pop();	
+	food.timeArray.unshift(food.lastClick);
+	food.array.pop();	
+	food.array.unshift(food.clickerRate);
 	document.getElementById("check").innerHTML=""; //removes log text *new as of alpha 1.1
+	}
+	
+function calculateTotalFood() {
+	food.arrayTotal = food.array.reduce((a, b) => a + b, 0);
+	food.secondTotal = food.arrayTotal;
+	}
+
+function timeCheckFood() {
+	food.timeDiff = general.currentTime - food.timeArray[49];
+	food.timeDiff2 = general.currentTime - food.lastClick;
+	if (food.timeDiff >= 1000 && food.arrayTotal != 0) {
+	food.timeArray.pop();
+	food.timeArray.unshift(0);
+	food.array.pop();
+	food.array.unshift(0);
+	} else {
+	}
 	}
 
 //On click action for Gather Gold
 function gatherGold() {
 	gold.total += gold.clickerRate;
-	gold.secondTotal += gold.clickerRate;
-		setTimeout(function(){
-         gold.secondTotal -= gold.clickerRate;
-			},1000);
+	gold.lastClick = new Date().getTime();
+	gold.timeArray.pop();	
+	gold.timeArray.unshift(gold.lastClick);
+	gold.array.pop();	
+	gold.array.unshift(gold.clickerRate);
 	document.getElementById("check").innerHTML=""; //removes log text *new as of alpha 1.1
+	}
+	
+function calculateTotalGold() {
+	gold.arrayTotal = gold.array.reduce((a, b) => a + b, 0);
+	gold.secondTotal = gold.arrayTotal;
+	}
+
+function timeCheckGold() {
+	gold.timeDiff = general.currentTime - gold.timeArray[49];
+	gold.timeDiff2 = general.currentTime - gold.lastClick;
+	if (gold.timeDiff >= 1000 && gold.arrayTotal != 0) {
+	gold.timeArray.pop();
+	gold.timeArray.unshift(0);
+	gold.array.pop();
+	gold.array.unshift(0);
+	} else {
+	}
 	}
 
 //On click action for Gather Iron
 function gatherIron() {
 	iron.total += iron.clickerRate;
-	iron.secondTotal += iron.clickerRate;
-		setTimeout(function(){
-         iron.secondTotal -= iron.clickerRate;
-			},1000);
+	iron.lastClick = new Date().getTime();
+	iron.timeArray.pop();	
+	iron.timeArray.unshift(iron.lastClick);
+	iron.array.pop();	
+	iron.array.unshift(iron.clickerRate);
 	document.getElementById("check").innerHTML=""; //removes log text *new as of alpha 1.1
 	}
+	
+function calculateTotalIron() {
+	iron.arrayTotal = iron.array.reduce((a, b) => a + b, 0);
+	iron.secondTotal = iron.arrayTotal;
+	}
+
+function timeCheckIron() {
+	iron.timeDiff = general.currentTime - iron.timeArray[49];
+	iron.timeDiff2 = general.currentTime - iron.lastClick;
+	if (iron.timeDiff >= 1000 && iron.arrayTotal != 0) {
+	iron.timeArray.pop();
+	iron.timeArray.unshift(0);
+	iron.array.pop();
+	iron.array.unshift(0);
+	} else {
+	}
+	}
+
 
 //Function for axe upgrades
 function upgradeAxe() {
@@ -582,6 +679,23 @@ function hireMiner() {
 		}
 	}
 	
+//Main Game loop - currently tied to monitor refresh rate, writes values to page
+function mainLoop() {
+    totalUpdate();
+	setTime();
+	timeCheckWood();
+	calculateTotalWood();
+	timeCheckFood();
+	calculateTotalFood();
+	timeCheckGold();
+	calculateTotalGold();
+	timeCheckIron();
+	calculateTotalIron();
+	earningSecValues();
+	earningSecUpdate();
+    requestAnimationFrame(mainLoop);
+	}
+	
 function axeDescripition() {
 	document.getElementById("check").innerHTML="Wood: "+axeCost.wood+"<br>Food: "+axeCost.food+"<br>Gold: "+axeCost.gold+"<br>Iron: "+axeCost.iron;
 	}
@@ -644,7 +758,7 @@ setInterval(idleUpdate, 1000);
 //BRITISH SPEAKING VOICES LIKE STRONGHOLD SERIES
 </script>
 <div class="split right"><div class="topGap">
-<h2>Clickers</h2>
+<h2>Resources</h2>
 <button class="button1" onclick="gatherWood()">Gather Wood</button>
 <button class="button1" onclick="gatherGold()">Collect Gold</button>
 <button class="button1" onclick="gatherFood()">Forage Food</button>
