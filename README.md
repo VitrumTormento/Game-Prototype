@@ -1,5 +1,9 @@
 # Game-Prototype
 
+Update 1.2
+Massive update to the function of all resource-earning per second calculation
+Removal of all related bugs (hope so)
+
 Update 1.1
 Log message rewrite - eliminated 100 lines of code
 Slight bug fix
