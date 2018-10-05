@@ -34,3 +34,22 @@ Modified building cost increase.
 Update 0.1
 Github setup.
 Pre-existing code committed to master and created individual developer branches.
+
+
+PLANNED GAME UPDATES
+1.Connect Serfs to Clicker Rate
+2.Limit Serfs to building level(max of 5 per lvl)
+3.Add multiplier per 5,10,25,50,100 building levels
+4.Upload game to server
+5.Order sound snippets(from Chris)
+6.Implement sound values to game
+7.Add mute button
+8.Add reset function
+9.Add global multiplier tied to reset (based of total resources earnt?)
+10.Buy upgrades/buildings/sers in sets 1,5,10,50,100,MAX
+11.Shift+click to buy MAX
+12.Add save function
+13.Add offline idle rates!
+14.Tie hotkeys to upgrades and buildings?
+15.Add average of array totals as display value for earning per second
+16.Add dynamic array size tied to one second of processing speed!
