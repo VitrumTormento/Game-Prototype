@@ -1,5 +1,13 @@
 # Game-Prototype
 
+Update 1.5
+Connected serfs to click gather rates 
+Limited number of serfs per building lvl (currently set to 5 per lvl)
+Added multipliers for per building levels (5,10,25 etc)
+Implemented test sound values and background music
+Added mute buttons for music and sound. 
+Game is now uploaded to www.apollostudios.org
+
 Update 1.2
 Massive update to the function of all resource-earning per second calculation
 Removal of all related bugs (hope so)
@@ -37,13 +45,13 @@ Pre-existing code committed to master and created individual developer branches.
 
 
 PLANNED GAME UPDATES
-1.Connect Serfs to Clicker Rate
-2.Limit Serfs to building level(max of 5 per lvl)
-3.Add multiplier per 5,10,25,50,100 building levels
-4.Upload game to server
+//1.Connect Serfs to Clicker Rate
+//2.Limit Serfs to building level(max of 5 per lvl)
+//3.Add multiplier per 5,10,25,50,100 building levels
+//4.Upload game to server
 5.Order sound snippets(from Chris)
-6.Implement sound values to game
-7.Add mute button
+//6.Implement sound values to game
+//7.Add mute button
 8.Add reset function
 9.Add global multiplier tied to reset (based of total resources earnt?)
 10.Buy upgrades/buildings/sers in sets 1,5,10,50,100,MAX
